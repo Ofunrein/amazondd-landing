@@ -1,0 +1,2690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Designs & Decor - Event Planning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Portfolio images for lightbox
+        const portfolioImages = [
+            'https://images.unsplash.com/photo-1519671488599-5b6a7a7f583b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+            'https://images.unsplash.com/photo-1556911220-e15f29a6b3d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+            'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80',
+            'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+            'https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+            'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80',
+            'https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+            'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+        ];
+        
+      document.addEventListener('DOMContentLoaded', () => {
+        // preload rental & portfolio images
+        const allImages = rentalItems.map(i => i.imageUrl).concat(portfolioImages);
+        
+        // Define placeholder image for failed image loads
+        const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"%3E%3Crect width="300" height="200" fill="%23111111"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%23D4AF37"%3EAmazon Designs%3C/text%3E%3C/svg%3E';
+        
+        // Force image preloading with error handling
+        console.log(`Preloading ${allImages.length} images...`);
+        allImages.forEach(src => { 
+          const img = new Image(); 
+          img.onerror = () => {
+            console.log(`Failed to preload: ${src}`);
+          };
+          img.onload = () => {
+            console.log(`Successfully preloaded: ${src}`);
+          };
+          img.src = src; 
+        });
+        
+        // Ensure all images in the DOM have error handlers
+        setTimeout(() => {
+          document.querySelectorAll('img').forEach(img => {
+            if (!img.hasAttribute('onerror')) {
+              img.onerror = function() {
+                this.src = placeholderImage;
+                console.log('Image failed to load:', this.src);
+              };
+            }
+          });
+        }, 500);
+      });
+    </script>
+    <style>
+        :root {
+            --primary: #111111;
+            --secondary: #D4AF37;
+            --accent: #FFD700;
+            --gold: #D4AF37;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary);
+            color: white;
+            scroll-behavior: smooth;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(17, 17, 17, 0.85);
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero section styling */
+        .hero {
+            position: relative;
+            background-color: var(--primary);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; 
+            right: 0; 
+            bottom: 0; 
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            max-width: 100%;
+            padding: 0 20px;
+        }
+        
+        .hero-content h1 {
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-content p {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(17,17,17,0.95));
+        }
+        
+        .pill-button {
+            border-radius: 9999px;
+            background-color: rgba(255,255,255,0);
+            border: 2px solid var(--gold);
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .pill-button:hover {
+            background-color: var(--gold);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+        
+        .hero-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .underline-animation {
+            position: relative;
+        }
+        
+        .underline-animation:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .underline-animation:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .service-card {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .service-card:hover {
+            transform: rotateY(10deg) scale(1.03);
+        }
+        
+        .portfolio-item {
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+            height: 100%;
+            background-color: rgba(32, 32, 32, 0.7);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .form-input:focus {
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+        
+        .scroll-top {
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--secondary);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 1px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--secondary) }
+        }
+        
+        .masonry {
+            column-count: 1;
+            column-gap: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry {
+                column-count: 3;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+        
+        /* Lazy loading for images */
+        .lazy {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .lazy.loaded {
+            opacity: 1;
+        }
+        
+        /* Scroll direction detection */
+        .scroll-down {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-up {
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Word-by-word animation for hero headline */
+        .word-animation span {
+            opacity: 0;
+            display: inline-block;
+            animation: fadeInWord 0.5s forwards;
+            white-space: normal;
+        }
+        
+        @keyframes fadeInWord {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Scroll animations with IntersectionObserver */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Different animation directions */
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in-left.visible,
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .zoom-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Rental catalog styles */
+        .rental-search {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+        
+        .rental-search input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .rental-search input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+        }
+        
+        .rental-search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .rental-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-btn {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn:focus {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: black;
+        }
+        
+        .rental-masonry {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-gap: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .rental-masonry {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .rental-masonry {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .rental-masonry {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .rental-card {
+            width: 100%;
+            margin-bottom: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block !important;
+            visibility: visible !important;
+        }
+        
+        .rental-card:hover, .rental-card:focus-within {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 
+                        0 0 10px 0 rgba(212, 175, 55, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .rental-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+            cursor: pointer;
+        }
+        
+        .rental-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .rental-card:hover .rental-img-container img {
+            transform: scale(1.1);
+        }
+        
+        .rental-content {
+            padding: 1.25rem;
+        }
+        
+        .rental-price {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: var(--gold);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .rental-category {
+            display: inline-block;
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+        
+        .rental-title {
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white;
+        }
+        
+        .rental-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .rental-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Rental lightbox */
+        .rental-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        
+        .lightbox-nav:hover {
+            background-color: var(--gold);
+            color: black;
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+        
+        .lightbox-close:hover {
+            background-color: var(--gold);
+            color: black;
+        }
+        
+        /* Scroll to top button for rental section */
+        .rental-scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--gold);
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+        
+        .rental-scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .rental-scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Testimonial carousel styles */
+        .testimonial-carousel {
+            position: relative;
+            padding: 0 40px;
+        }
+        
+        .testimonial-slide {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        @media (min-width: 640px) {
+            .testimonial-slide {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .testimonial-slide {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            border: none;
+            font-size: 1.5rem;
+        }
+        
+        .carousel-arrow:hover {
+            background-color: var(--gold);
+            color: black;
+        }
+        
+        .carousel-prev {
+            left: 0;
+        }
+        
+        .carousel-next {
+            right: 0;
+        }
+        
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .carousel-dot.active {
+            background-color: var(--gold);
+            transform: scale(1.2);
+        }
+        
+        .testimonial-carousel-container {
+            overflow: hidden;
+        }
+        
+        .testimonial-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .testimonial-page {
+            flex: 0 0 100%;
+            padding: 0 1rem;
+        }
+        
+        @keyframes fadeInItem {
+            from { 
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Additional rental item styles to ensure visibility */
+        #rental-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+        }
+        
+        @media (min-width: 640px) {
+            #rental-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            #rental-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            #rental-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .rental-card {
+            display: block !important;
+            opacity: 1 !important;
+            animation: fadeInItem 0.5s forwards;
+        }
+        
+        .rental-img-container img {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+        
+        /* Portfolio section styles */
+        .portfolio-categories .filter-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .portfolio-categories .filter-btn:hover {
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+        
+        .portfolio-categories .filter-btn.active {
+            background-color: var(--gold);
+            color: black;
+            border-color: var(--gold);
+        }
+        
+        #portfolio-grid .portfolio-item {
+            transition: all 0.5s ease;
+        }
+        
+        #portfolio-grid .fade-in {
+            animation: fadeInPortfolio 0.5s forwards;
+        }
+        
+        #portfolio-grid .fade-out {
+            animation: fadeOutPortfolio 0.5s forwards;
+        }
+        
+        @keyframes fadeInPortfolio {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes fadeOutPortfolio {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header & Navigation -->
+    <header class="fixed w-full z-50 nav-blur" id="header">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <span class="text-yellow-500">Amazon</span> Designs & Decor
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-white underline-animation">Home</a>
+                <a href="#about" class="text-white underline-animation">About</a>
+                <a href="#services" class="text-white underline-animation">Services</a>
+                <a href="#rentals" class="text-white underline-animation">Rentals</a>
+                <a href="#portfolio" class="text-white underline-animation">Portfolio</a>
+                <a href="#contact" class="text-white underline-animation">Contact</a>
+            </div>
+            
+            <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu bg-gray-900 md:hidden" id="mobile-menu">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-4">
+                <a href="#home" class="text-white py-2 border-b border-gray-700">Home</a>
+                <a href="#about" class="text-white py-2 border-b border-gray-700">About</a>
+                <a href="#services" class="text-white py-2 border-b border-gray-700">Services</a>
+                <a href="#rentals" class="text-white py-2 border-b border-gray-700">Rentals</a>
+                <a href="#portfolio" class="text-white py-2 border-b border-gray-700">Portfolio</a>
+                <a href="#contact" class="text-white py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                 alt="Event backdrop" 
+                 class="w-full h-full object-cover"
+                 onerror="this.src=placeholderImage">
+        </div>
+        
+        <div class="hero-content container mx-auto px-4" data-aos="fade-up">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white word-animation">
+                Setting the Stage for Lasting Memories
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 text-gray-200 typewriter">
+                Let us help you organize the perfect event!
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="tel:+15127990170" class="pill-button">
+                    Book Now
+                </a>
+                <a href="#rentals" class="pill-button">
+                    View Rentals
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section id="about" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center text-yellow-500 fade-in">
+                Creating Memorable Events
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 fade-in-right">
+                    <p class="text-gray-300">
+                        With twenty years of local event experience, Amazon Designs & Decor has established itself as the premier event planning service in the region. Our team of dedicated professionals brings creativity, precision, and passion to every event we design.
+                    </p>
+                    <p class="text-gray-300">
+                        Our wide range of vendors ensures that we can meet any request, from intimate gatherings to grand celebrations. We pride ourselves on attention to detail and creating experiences that leave lasting impressions on both hosts and guests.
+                    </p>
+                </div>
+                <div class="fade-in-left">
+                    <img src="https://images.unsplash.com/photo-1519671488599-5b6a7a7f583b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Event setup" 
+                         class="w-full h-auto rounded-lg shadow-xl lazy" 
+                         loading="lazy"
+                         onerror="this.src=placeholderImage">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center text-yellow-500 fade-in">
+                Our Services
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Planning -->
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in" style="transition-delay: 0.1s;">
+                    <div class="text-yellow-500 text-4xl mb-4">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Planning</h3>
+                    <p class="text-gray-300 mb-4">
+                        Comprehensive event planning including vendor matching, timeline creation, and budget management.
+                    </p>
+                    <a href="#contact" class="text-yellow-500 hover:text-yellow-400 font-medium">Learn More →</a>
+                </div>
+                
+                <!-- Consultation -->
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in" style="transition-delay: 0.2s;">
+                    <div class="text-yellow-500 text-4xl mb-4">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Consultation</h3>
+                    <p class="text-gray-300 mb-4">
+                        Expert advice on venue selection, scheduling, theme development, and decor options.
+                    </p>
+                    <a href="#contact" class="text-yellow-500 hover:text-yellow-400 font-medium">Learn More →</a>
+                </div>
+                
+                <!-- Event Management -->
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in" style="transition-delay: 0.3s;">
+                    <div class="text-yellow-500 text-4xl mb-4">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Event Management</h3>
+                    <p class="text-gray-300 mb-4">
+                        Full on-site coordination to ensure your event runs smoothly from setup to teardown.
+                    </p>
+                    <a href="#contact" class="text-yellow-500 hover:text-yellow-400 font-medium">Learn More →</a>
+                </div>
+                
+                <!-- Rentals -->
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in" style="transition-delay: 0.4s;">
+                    <div class="text-yellow-500 text-4xl mb-4">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Rentals</h3>
+                    <p class="text-gray-300 mb-4">
+                        Premium chairs, linens, tableware, and decor items available for rent at competitive prices.
+                    </p>
+                    <a href="#rentals" class="text-yellow-500 hover:text-yellow-400 font-medium">Browse Catalog →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rentals Section -->
+    <section id="rentals" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center text-yellow-500 fade-in">
+                Our Rental Collection
+            </h2>
+            
+            <div class="rental-search fade-in">
+                <input type="text" id="rental-search-input" placeholder="Search rentals..." aria-label="Search rentals">
+                <div class="rental-search-icon">
+                    <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+            <div class="rental-filters fade-in">
+                <button class="filter-btn active" data-category="All" tabindex="0" aria-pressed="true">All</button>
+                <button class="filter-btn" data-category="Chairs" tabindex="0" aria-pressed="false">Chairs</button>
+                <button class="filter-btn" data-category="Linens" tabindex="0" aria-pressed="false">Linens</button>
+                <button class="filter-btn" data-category="Centerpieces" tabindex="0" aria-pressed="false">Centerpieces</button>
+                <button class="filter-btn" data-category="Tableware" tabindex="0" aria-pressed="false">Tableware</button>
+                <button class="filter-btn" data-category="Lighting" tabindex="0" aria-pressed="false">Lighting</button>
+                <button class="filter-btn" data-category="Furniture" tabindex="0" aria-pressed="false">Furniture</button>
+                <button class="filter-btn" data-category="Decorations" tabindex="0" aria-pressed="false">Decorations</button>
+                </div>
+                
+            <!-- Simple grid of rental items -->
+            <div id="simple-rental-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+                <!-- Rental items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center text-yellow-500 fade-in">
+                What Our Clients Say
+            </h2>
+            
+            <div class="testimonial-carousel fade-in">
+                <button class="carousel-arrow carousel-prev" aria-label="Previous testimonials">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="testimonial-carousel-container">
+                    <div class="testimonial-slider">
+                        <!-- Page 1 (Testimonials 1-3) -->
+                        <div class="testimonial-page">
+                            <div class="testimonial-slide">
+                <!-- Testimonial 1 -->
+                                <div class="testimonial-card" data-index="0">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" 
+                             alt="Sarah Johnson" 
+                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                             loading="lazy">
+                        <div class="ml-4">
+                            <h4 class="text-xl font-bold text-white">Sarah Johnson</h4>
+                            <p class="text-yellow-500">Wedding Client</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "Amazon Designs & Decor transformed our wedding venue into a fairy tale. Their attention to detail was impeccable, and they handled every aspect so professionally. Our guests are still talking about how beautiful everything was!"
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                                <div class="testimonial-card" data-index="1">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" 
+                             alt="Michael Chen" 
+                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                             loading="lazy">
+                        <div class="ml-4">
+                            <h4 class="text-xl font-bold text-white">Michael Chen</h4>
+                            <p class="text-yellow-500">Corporate Client</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "We've used Amazon Designs & Decor for three annual conferences now, and they consistently exceed our expectations. Their team is creative, responsive, and delivers flawless execution every time."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                                <div class="testimonial-card" data-index="2">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" 
+                             alt="Emily Rodriguez" 
+                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                             loading="lazy">
+                        <div class="ml-4">
+                            <h4 class="text-xl font-bold text-white">Emily Rodriguez</h4>
+                            <p class="text-yellow-500">Birthday Party Client</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "I was overwhelmed planning my daughter's quinceañera, but Amazon Designs made it so easy! They took my vague ideas and created something more beautiful than I could have imagined. Worth every penny!"
+                    </p>
+                                </div>
+                </div>
+            </div>
+            
+                        <!-- Page 2 (Testimonials 4-6) -->
+                        <div class="testimonial-page">
+                            <div class="testimonial-slide">
+                                <!-- Testimonial 4 -->
+                                <div class="testimonial-card" data-index="3">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/men/36.jpg" 
+                                             alt="Daniel Williams" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Daniel Williams</h4>
+                                            <p class="text-yellow-500">Anniversary Party</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "Amazon Designs created such an elegant atmosphere for our 25th anniversary celebration. The lighting design and table decorations received so many compliments from our friends and family."
+                                    </p>
+                                </div>
+                                
+                                <!-- Testimonial 5 -->
+                                <div class="testimonial-card" data-index="4">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/women/22.jpg" 
+                                             alt="Jennifer Lopez" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Jennifer Lopez</h4>
+                                            <p class="text-yellow-500">Gala Organizer</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "As a nonprofit coordinator, our budget was limited, but Amazon Designs worked with us to create a stunning charity gala that looked far more expensive than it was. Professional and creative!"
+                                    </p>
+                                </div>
+                                
+                                <!-- Testimonial 6 -->
+                                <div class="testimonial-card" data-index="5">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/men/52.jpg" 
+                                             alt="Robert Taylor" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Robert Taylor</h4>
+                                            <p class="text-yellow-500">Corporate Event</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "Our product launch needed to make a statement, and Amazon Designs delivered beyond expectations. The customized decor perfectly aligned with our brand identity and impressed our stakeholders."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Page 3 (Testimonials 7-9) -->
+                        <div class="testimonial-page">
+                            <div class="testimonial-slide">
+                                <!-- Testimonial 7 -->
+                                <div class="testimonial-card" data-index="6">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/women/56.jpg" 
+                                             alt="Sophia Martinez" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Sophia Martinez</h4>
+                                            <p class="text-yellow-500">Baby Shower</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "The baby shower Amazon Designs created was absolutely magical! They turned our backyard into an enchanted garden that perfectly captured the joy of welcoming our new baby."
+                                    </p>
+                                </div>
+                                
+                                <!-- Testimonial 8 -->
+                                <div class="testimonial-card" data-index="7">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/men/67.jpg" 
+                                             alt="William Johnson" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">William Johnson</h4>
+                                            <p class="text-yellow-500">Retirement Party</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "After 30 years at my company, I wanted a retirement celebration that felt special. Amazon Designs created a nostalgic yet elegant atmosphere that perfectly honored my career journey."
+                                    </p>
+                                </div>
+                                
+                                <!-- Testimonial 9 -->
+                                <div class="testimonial-card" data-index="8">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/women/41.jpg" 
+                                             alt="Olivia Parker" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Olivia Parker</h4>
+                                            <p class="text-yellow-500">Graduation Party</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "Amazon Designs transformed our backyard into the perfect graduation celebration venue. Their attention to the small details made the day truly special for our son and all his friends."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-arrow carousel-next" aria-label="Next testimonials">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-dots">
+                    <button class="carousel-dot active" data-index="0" aria-label="Page 1"></button>
+                    <button class="carousel-dot" data-index="1" aria-label="Page 2"></button>
+                    <button class="carousel-dot" data-index="2" aria-label="Page 3"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery Section -->
+    <section id="portfolio" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center text-yellow-500 fade-in">
+                Our Event Portfolio
+            </h2>
+            
+            <p class="text-center text-gray-300 max-w-3xl mx-auto mb-12 fade-in">
+                Browse through our gallery of past events and decorations to see the quality and creativity we bring to every occasion.
+            </p>
+            
+            <div class="portfolio-categories mb-10 flex justify-center flex-wrap gap-3">
+                <button class="filter-btn active" data-category="all">All Events</button>
+                <button class="filter-btn" data-category="weddings">Weddings</button>
+                <button class="filter-btn" data-category="corporate">Corporate</button>
+                <button class="filter-btn" data-category="birthdays">Birthdays</button>
+                <button class="filter-btn" data-category="social">Social Events</button>
+            </div>
+            
+            <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Wedding Events -->
+                <div class="portfolio-item" data-category="weddings">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Elegant Wedding Setup" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Elegant Wedding</h3>
+                                <p class="text-gray-200 mt-2">Sophisticated decor for a memorable celebration</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="weddings">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Wedding Reception Decor" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Garden Wedding</h3>
+                                <p class="text-gray-200 mt-2">Natural beauty enhanced with floral arrangements</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Corporate Events -->
+                <div class="portfolio-item" data-category="corporate">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+                             alt="Corporate Conference Setup" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Executive Conference</h3>
+                                <p class="text-gray-200 mt-2">Professional environment for business meetings</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="corporate">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1412&q=80" 
+                             alt="Gala Dinner Event" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Corporate Gala</h3>
+                                <p class="text-gray-200 mt-2">Elegant evening event for company celebrations</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1412&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Birthday Events -->
+                <div class="portfolio-item" data-category="birthdays">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Birthday Party Decor" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Luxury Birthday</h3>
+                                <p class="text-gray-200 mt-2">Spectacular setup for milestone celebrations</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="birthdays">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Sweet Sixteen Celebration" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Sweet Sixteen</h3>
+                                <p class="text-gray-200 mt-2">Themed decorations for a perfect teen party</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Events -->
+                <div class="portfolio-item" data-category="social">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Banquet Hall Decor" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Gala Fundraiser</h3>
+                                <p class="text-gray-200 mt-2">Sophisticated setup for charity events</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="social">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" 
+                             alt="Anniversary Party" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Anniversary Celebration</h3>
+                                <p class="text-gray-200 mt-2">Romantic settings for celebrating love</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="social">
+                    <div class="relative overflow-hidden rounded-lg group">
+                        <img src="https://images.unsplash.com/photo-1556337600-5b5f3336335b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" 
+                             alt="Baby Shower Decor" 
+                             class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">Baby Shower</h3>
+                                <p class="text-gray-200 mt-2">Delightful decorations for welcoming new life</p>
+                                <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-400 transition" onclick="openLightbox('https://images.unsplash.com/photo-1556337600-5b5f3336335b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Booking -->
+    <section id="contact" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center text-yellow-500 fade-in">
+                Get In Touch
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="fade-in-right">
+                    <h3 class="text-2xl font-bold mb-6 text-white">Book Your Event</h3>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-300 mb-2">Full Name</label>
+                            <input type="text" id="name" class="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="email" class="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-gray-300 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="date" class="block text-gray-300 mb-2">Event Date</label>
+                            <input type="date" id="date" class="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-2">Event Details</label>
+                            <textarea id="message" rows="4" class="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-500 text-white"></textarea>
+                        </div>
+                        
+                        <div>
+                          <label class="block text-gray-300 mb-2">Items to Reserve</label>
+                          <span id="reserved-items-display" class="text-white">None</span>
+                          <input type="hidden" id="reserved-items-input" name="reservedItems" value="[]">
+                        </div>
+                        
+                        <button type="submit" id="submit-btn" class="w-full pill-button">
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="fade-in-left">
+                    <h3 class="text-2xl font-bold mb-6 text-white">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="text-yellow-500 text-xl mt-1 mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Location</h4>
+                                <p class="text-gray-300">Central Texas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="text-yellow-500 text-xl mt-1 mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Phone</h4>
+                                <p class="text-gray-300">(512) 799-0170</p>
+                                <p class="text-gray-300">Mon-Fri: 9am-6pm</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="text-yellow-500 text-xl mt-1 mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Email</h4>
+                                <p class="text-gray-300">amazondesignsdecor@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4">
+                            <h4 class="text-lg font-bold mb-4 text-white">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://www.facebook.com/amazondesignsdecor/" target="_blank" rel="noopener" class="text-gray-300 hover:text-yellow-500 text-4xl" aria-label="Facebook">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                                <a href="https://www.instagram.com/amazon_designs/" target="_blank" rel="noopener" class="text-gray-300 hover:text-yellow-500 text-4xl" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.tiktok.com/@amazon_designs1" target="_blank" rel="noopener" class="text-gray-300 hover:text-yellow-500 text-4xl" aria-label="TikTok">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-xl font-bold text-white mb-4 md:mb-0">
+                    <span class="text-yellow-500">Amazon</span> Designs & Decor
+                </div>
+                
+                <div class="flex space-x-6 mb-4 md:mb-0">
+                    <a href="https://www.facebook.com/amazondesignsdecor/" target="_blank" rel="noopener" class="text-gray-300 hover:text-yellow-500 text-4xl" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/amazon_designs/" target="_blank" rel="noopener" class="text-gray-300 hover:text-yellow-500 text-4xl" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@amazon_designs1" target="_blank" rel="noopener" class="text-gray-300 hover:text-yellow-500 text-4xl" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+                
+                <div class="text-gray-400 text-sm">
+                    © 2024 Amazon Designs & Decor – All Rights Reserved.
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="topFunction()" id="scroll-top" class="fixed bg-yellow-600 text-white w-12 h-12 rounded-full flex items-center justify-center scroll-top" style="bottom:20px;right:20px;" title="Go to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">&#10094;</span>
+        <img id="lightbox-img" class="lightbox-content" src="" alt="">
+        <span class="lightbox-nav lightbox-next" onclick="changeImage(1)">&#10095;</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: false
+        });
+        
+        // Define placeholder image for failed image loads
+        const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"%3E%3Crect width="300" height="200" fill="%23111111"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%23D4AF37"%3EAmazon Designs%3C/text%3E%3C/svg%3E';
+
+        // Preload all rental images to avoid loading issues
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Total rental items:", rentalItems.length);
+            
+            // Preload images
+            rentalItems.forEach(item => {
+                const img = new Image();
+                img.src = item.imageUrl;
+                img.onerror = () => console.log(`Failed to preload: ${item.imageUrl}`);
+            });
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        });
+        
+        // Word-by-word animation for hero headline
+        document.addEventListener('DOMContentLoaded', function() {
+            const headline = document.querySelector('.word-animation');
+            if (headline) {
+                const text = headline.textContent.trim();
+                const words = text.split(' ');
+                headline.innerHTML = '';
+                
+                words.forEach((word, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = word;
+                    span.style.animationDelay = `${index * 0.2}s`;
+                    headline.appendChild(span);
+                    
+                    // Add space after each word except the last one
+                    if (index < words.length - 1) {
+                        headline.appendChild(document.createTextNode(' '));
+                    }
+                });
+            }
+            
+            // Initialize IntersectionObserver for scroll animations
+            const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .zoom-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Stop observing after becoming visible
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Initialize rental catalog
+            initRentalCatalog();
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.remove('open');
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('nav-blur');
+            } else {
+                header.classList.remove('nav-blur');
+            }
+        });
+        
+        // Testimonial carousel code removal
+        // We don't need the carousel functionality anymore as we're displaying all testimonials at once
+        /*
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        const testimonialDots = document.querySelectorAll('.flex.justify-center.mt-8.space-x-4 button');
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+            testimonialDots.forEach(dot => {
+                dot.classList.remove('bg-yellow-500');
+                dot.classList.add('bg-gray-500');
+            });
+            
+            testimonials[index].classList.add('active');
+            testimonialDots[index].classList.remove('bg-gray-500');
+            testimonialDots[index].classList.add('bg-yellow-500');
+            currentTestimonial = index;
+        }
+        
+        // Auto-rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }, 7000);
+        */
+        
+        // Scroll animation for testimonials
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize testimonial carousel
+            const testimonialSlider = document.querySelector('.testimonial-slider');
+            const prevButton = document.querySelector('.carousel-prev');
+            const nextButton = document.querySelector('.carousel-next');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const totalPages = dots.length;
+            let currentPage = 0;
+            
+            // Create testimonial array from DOM for animation purposes
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            
+            // Initialize all cards as visible for animation
+            testimonialCards.forEach(card => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, 300);
+            });
+            
+            function goToPage(pageIndex) {
+                if (pageIndex < 0) {
+                    pageIndex = totalPages - 1;
+                } else if (pageIndex >= totalPages) {
+                    pageIndex = 0;
+                }
+                
+                currentPage = pageIndex;
+                testimonialSlider.style.transform = `translateX(-${currentPage * 100}%)`;
+                
+                // Update active dot
+                dots.forEach((dot, index) => {
+                    if (index === currentPage) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+                
+                // Animate the cards on the current page
+                testimonialCards.forEach(card => {
+                    const cardIndex = parseInt(card.dataset.index);
+                    const cardPage = Math.floor(cardIndex / 3);
+                    
+                    if (cardPage === currentPage) {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 300);
+                    }
+                });
+            }
+            
+            // Add event listeners to buttons
+            prevButton.addEventListener('click', () => {
+                goToPage(currentPage - 1);
+            });
+            
+            nextButton.addEventListener('click', () => {
+                goToPage(currentPage + 1);
+            });
+            
+            // Add event listeners to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    goToPage(index);
+                });
+            });
+            
+            // Auto-advance carousel every 7 seconds
+            let autoAdvanceInterval = setInterval(() => {
+                goToPage(currentPage + 1);
+            }, 7000);
+            
+            // Pause auto-advance on mouse enter
+            const carousel = document.querySelector('.testimonial-carousel');
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(autoAdvanceInterval);
+            });
+            
+            // Resume auto-advance on mouse leave
+            carousel.addEventListener('mouseleave', () => {
+                clearInterval(autoAdvanceInterval);
+                autoAdvanceInterval = setInterval(() => {
+                    goToPage(currentPage + 1);
+                }, 7000);
+            });
+            
+            // Initialize carousel
+            goToPage(0);
+        });
+        
+        // Scroll to top button
+        window.onscroll = function() {
+            const scrollTopBtn = document.getElementById("scroll-top");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollTopBtn.style.display = "flex";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        };
+        
+        function topFunction() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        // Lightbox functionality
+        // The portfolioImages array is now declared at the top of the file
+        
+        let currentImageIndex = 0;
+        
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            currentImageIndex = portfolioImages.indexOf(src);
+            lightboxImg.src = src;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function changeImage(n) {
+            currentImageIndex += n;
+            
+            if (currentImageIndex >= portfolioImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = portfolioImages.length - 1;
+            }
+            
+            document.getElementById('lightbox-img').src = portfolioImages[currentImageIndex];
+        }
+        
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+        
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const reserved = document.getElementById('reserved-items-input').value;
+            document.getElementById('message').value += `\n\nReserved Items: ${reserved}`;
+            
+            e.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Request Sent!';
+            submitBtn.classList.remove('pulse');
+            submitBtn.classList.add('bg-green-600');
+            
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                this.reset();
+                submitBtn.innerHTML = 'Submit Request';
+                submitBtn.classList.remove('bg-green-600');
+                submitBtn.classList.add('pulse');
+            }, 3000);
+        });
+        
+        // Lazy loading for images
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('.lazy');
+            
+            const lazyLoad = function() {
+                if ('IntersectionObserver' in window) {
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                // If data-src is available, use it, otherwise keep src
+                                if (img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                }
+                        img.classList.add('loaded');
+                                imageObserver.unobserve(img);
+                                
+                                // Add error handler
+                                img.onerror = function() {
+                                    this.src = placeholderImage;
+                                    console.log('Image failed to load:', img.dataset.src || img.src);
+                                };
+                            }
+                        });
+                    }, {
+                        rootMargin: '0px 0px 100px 0px',
+                        threshold: 0.1
+                    });
+                    
+                    lazyImages.forEach(img => {
+                        // Store original src as data-src if not already set
+                        if (!img.dataset.src && img.src) {
+                            img.dataset.src = img.src;
+                        }
+                        imageObserver.observe(img);
+                    });
+                } else {
+                    // Fallback for browsers without IntersectionObserver
+                    lazyImages.forEach(img => {
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                        }
+                        img.classList.add('loaded');
+                        
+                        // Add error handler
+                        img.onerror = function() {
+                            this.src = placeholderImage;
+                            console.log('Image failed to load:', img.dataset.src || img.src);
+                        };
+                    });
+                }
+            };
+            
+            // Initialize lazy loading
+            lazyLoad();
+        });
+            
+            // Initial load
+            lazyLoad();
+            
+            // Load on scroll
+            window.addEventListener('scroll', lazyLoad);
+            window.addEventListener('resize', lazyLoad);
+            window.addEventListener('orientationchange', lazyLoad);
+        
+        // Scroll direction detection and animation
+        let lastScrollTop = 0;
+        const scrollElements = document.querySelectorAll('[data-scroll]');
+        const activatedElements = new Set(); // Track elements that have been activated
+        
+        function handleScrollAnimation() {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            
+            scrollElements.forEach(el => {
+                // Skip elements that have already been activated
+                if (activatedElements.has(el)) return;
+                
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                const delay = el.dataset.delay || 0;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    setTimeout(() => {
+                        // No longer need to check scroll direction, just activate
+                            el.classList.add('scroll-active');
+                        el.classList.remove('scroll-up', 'scroll-down');
+                        
+                        // Track this element as activated
+                        activatedElements.add(el);
+                    }, delay);
+                }
+            });
+            
+            lastScrollTop = st <= 0 ? 0 : st;
+        }
+        
+        // Initial check
+        handleScrollAnimation();
+        
+        // Check on scroll
+        window.addEventListener('scroll', function() {
+            handleScrollAnimation();
+        });
+
+        // Rental items data
+        const rentalItems = [
+            {
+                id: 1,
+                title: "Chiavari Chairs",
+                imageUrl: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
+                description: "Elegant gold or silver chiavari chairs for any formal event.",
+                price: "$8/chair",
+                category: "Chairs"
+            },
+            {
+                id: 2,
+                title: "Luxury Linens",
+                imageUrl: "https://images.unsplash.com/photo-1556911220-e15f29a6b3d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Premium table linens in various colors and textures.",
+                price: "$15/table",
+                category: "Linens"
+            },
+            {
+                id: 3,
+                title: "Floral Centerpieces",
+                imageUrl: "https://images.unsplash.com/photo-1519671488599-5b6a7a7f583b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Stunning floral centerpiece options for any event theme.",
+                price: "$45-120 each",
+                category: "Centerpieces"
+            },
+            {
+                id: 4,
+                title: "Crystal Stemware",
+                imageUrl: "https://images.unsplash.com/photo-1563791877383-cb91899a5c7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80",
+                description: "Elegant crystal wine glasses and champagne flutes.",
+                price: "$2.50/piece",
+                category: "Tableware"
+            },
+            {
+                id: 5,
+                title: "LED Uplighting",
+                imageUrl: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Colorful LED uplighting to transform any venue.",
+                price: "$35/light",
+                category: "Lighting"
+            },
+            {
+                id: 6,
+                title: "Folding Chairs",
+                imageUrl: "https://images.unsplash.com/photo-1558005137-d9119f6ab44b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+                description: "Comfortable folding chairs for outdoor events.",
+                price: "$3/chair",
+                category: "Chairs"
+            },
+            {
+                id: 7,
+                title: "Table Runners",
+                imageUrl: "https://images.unsplash.com/photo-1478146059778-26028b07395a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+                description: "Elegant table runners in various colors and materials.",
+                price: "$8/runner",
+                category: "Linens"
+            },
+            {
+                id: 8,
+                title: "Non-Floral Centerpieces",
+                imageUrl: "https://images.unsplash.com/photo-1501250987900-211872d97eaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Creative non-floral centerpieces including candles, lanterns, and more.",
+                price: "$25-75 each",
+                category: "Centerpieces"
+            },
+            {
+                id: 9,
+                title: "Charger Plates",
+                imageUrl: "https://images.unsplash.com/photo-1551734322-f86a8a8ee25f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Decorative charger plates in various colors and materials.",
+                price: "$1.50/plate",
+                category: "Tableware"
+            },
+            {
+                id: 10,
+                title: "String Lights",
+                imageUrl: "https://images.unsplash.com/photo-1617005082133-548c4dd27f2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Fairy lights and string lights to create a magical atmosphere.",
+                price: "$25/strand",
+                category: "Lighting"
+            },
+            {
+                id: 11,
+                title: "Lounge Furniture",
+                imageUrl: "https://images.unsplash.com/photo-1605774337664-7a846e9cdf17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Comfortable lounge furniture for cocktail hour and receptions.",
+                price: "$150-300/set",
+                category: "Furniture"
+            },
+            {
+                id: 12,
+                title: "Backdrop Draping",
+                imageUrl: "https://images.unsplash.com/photo-1525772764200-be829a350797?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Elegant backdrop draping for ceremonies and photo areas.",
+                price: "$200-500/setup",
+                category: "Decorations"
+            },
+            {
+                id: 13,
+                title: "Candelabras",
+                imageUrl: "https://images.unsplash.com/photo-1529974019031-b0cd38fd54fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Elegant candelabras for a romantic atmosphere.",
+                price: "$35/each",
+                category: "Centerpieces"
+            },
+            {
+                id: 14,
+                title: "Dance Floor",
+                imageUrl: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Portable dance floor sections for your reception.",
+                price: "$500-1,200/setup",
+                category: "Furniture"
+            },
+            {
+                id: 15,
+                title: "China Place Settings",
+                imageUrl: "https://images.unsplash.com/photo-1560787313-5dff9a4b9562?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                description: "Complete fine china place settings for formal dining.",
+                price: "$8/setting",
+                category: "Tableware"
+            },
+            {
+                id: 16,
+                title: "Spandex Chair Covers",
+                imageUrl: "https://images.unsplash.com/photo-1544227867-14e1de7ac24d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Stretchy spandex chair covers in various colors to transform basic chairs.",
+                price: "$3.50/cover",
+                category: "Chairs"
+            },
+            {
+                id: 17,
+                title: "Table Covers",
+                imageUrl: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Full-length tablecloths in a variety of fabrics, colors and sizes.",
+                price: "$12-25/cover",
+                category: "Linens"
+            },
+            {
+                id: 18,
+                title: "LED Dance Floor",
+                imageUrl: "https://images.unsplash.com/photo-1517263904808-5dc91e3e7044?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80",
+                description: "Illuminated dance floor with programmable LED patterns and colors.",
+                price: "$850-1,500/event",
+                category: "Lighting"
+            },
+            {
+                id: 19,
+                title: "Crystal Chandeliers",
+                imageUrl: "https://images.unsplash.com/photo-1519916705277-5c695b2a5185?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                description: "Elegant crystal chandeliers to transform your venue ceiling.",
+                price: "$175-350/chandelier",
+                category: "Lighting"
+            },
+            {
+                id: 20,
+                title: "Silver Flatware",
+                imageUrl: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1680&q=80",
+                description: "Premium silver-plated flatware sets for upscale dining.",
+                price: "$4.50/setting",
+                category: "Tableware"
+            }
+        ];
+
+        // Rental Catalog Functionality
+        function initRentalCatalog() {
+            const rentalGrid = document.getElementById('rental-grid');
+            const searchInput = document.getElementById('rental-search-input');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            let currentFilter = 'All';
+            let currentSearch = '';
+            
+            // Clear the grid first
+            rentalGrid.innerHTML = '';
+            console.log("initRentalCatalog called - rental items count:", rentalItems.length);
+            
+            // Add each rental item directly to the grid
+            rentalItems.forEach((item, index) => {
+                try {
+                    const card = document.createElement('div');
+                    card.className = 'rental-card';
+                    card.style.display = 'block';
+                    card.style.visibility = 'visible';
+                    
+                    card.innerHTML = `
+                        <div class="rental-img-container">
+                            <img src="${item.imageUrl}" alt="${item.title}" 
+                                 style="display: block; width: 100%; height: 100%; object-fit: cover;"
+                                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'200\\' viewBox=\\'0 0 300 200\\'%3E%3Crect width=\\'300\\' height=\\'200\\' fill=\\'%23111111\\'/%3E%3Ctext x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'%23D4AF37\\'%3EAmazon Designs%3C/text%3E%3C/svg%3E'">
+                            <div class="rental-price">${item.price}</div>
+                        </div>
+                        <div class="rental-content">
+                            <span class="rental-category">${item.category}</span>
+                            <h3 class="rental-title">${item.title}</h3>
+                            <p class="rental-description">${item.description}</p>
+                            <div class="rental-actions">
+                                <button class="pill-button py-2 px-4" data-item-id="${item.id}">Reserve</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    rentalGrid.appendChild(card);
+                    console.log(`Added item ${index + 1}: ${item.title}`);
+                } catch (error) {
+                    console.error(`Error creating card for item ${index}:`, error);
+                }
+            });
+            
+            // Set up event listener for reserve buttons
+            document.querySelectorAll('.rental-actions button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = parseInt(this.dataset.itemId);
+                    const i = reservedItems.indexOf(itemId);
+                    
+                    if (i === -1) {
+                        reservedItems.push(itemId);
+                        this.textContent = 'Reserved';
+                        this.style.backgroundColor = 'var(--gold)';
+                        this.style.color = '#000';
+                    } else {
+                        reservedItems.splice(i, 1);
+                        this.textContent = 'Reserve';
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                    }
+                    
+                    document.getElementById('reserved-items-input').value = JSON.stringify(reservedItems);
+                    document.getElementById('reserved-items-display').textContent = 
+                        reservedItems.length > 0 ? reservedItems.length + ' items' : 'None';
+                });
+            });
+            
+            // Log final count
+            console.log("Initial render complete, items:", document.querySelectorAll('.rental-card').length);
+        }
+        
+        // Debounce function to limit how often a function can be called
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        // Track reserved items
+        let reservedItems = [];
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // First, initialize the rental catalog
+            initRentalCatalog();
+            console.log("DOM fully loaded - initRentalCatalog called");
+            
+            // Add a debug key combination (Shift + D)
+            let shiftPressed = false;
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Shift') shiftPressed = true;
+                if (shiftPressed && e.key === 'D') {
+                    const debugInfo = document.getElementById('debug-info');
+                    debugInfo.style.display = debugInfo.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+            
+            document.addEventListener('keyup', function(e) {
+                if (e.key === 'Shift') shiftPressed = false;
+            });
+            
+            // Update debug information
+            function updateDebugInfo() {
+                const totalItems = document.querySelectorAll('.rental-card').length;
+                const visibleItems = Array.from(document.querySelectorAll('.rental-card'))
+                    .filter(item => window.getComputedStyle(item).display !== 'none').length;
+                
+                document.getElementById('total-count').textContent = totalItems;
+                document.getElementById('visible-count').textContent = visibleItems;
+                
+                console.log(`Debug: ${visibleItems} visible out of ${totalItems} total items`);
+                
+                // If we have a serious issue, show the fallback grid
+                if (totalItems < 5 && rentalItems.length > 5) {
+                    activateFallbackGrid();
+                }
+            }
+            
+            // Portfolio filtering functionality
+            const portfolioFilterBtns = document.querySelectorAll('.portfolio-categories .filter-btn');
+            const portfolioItems = document.querySelectorAll('#portfolio-grid .portfolio-item');
+            
+            // Handle filter button clicks
+            portfolioFilterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active button
+                    portfolioFilterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filterCategory = this.dataset.category;
+                    
+                    // Filter items
+                    portfolioItems.forEach(item => {
+                        const itemCategory = item.dataset.category;
+                        
+                        if (filterCategory === 'all' || filterCategory === itemCategory) {
+                            item.style.display = 'block';
+                            // Add animation
+                            item.classList.remove('fade-out');
+                            item.classList.add('fade-in');
+                        } else {
+                            // Smooth transition out
+                            item.classList.remove('fade-in');
+                            item.classList.add('fade-out');
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Add hover animations for portfolio items
+            portfolioItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.querySelector('.absolute').style.opacity = '1';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.querySelector('.absolute').style.opacity = '0';
+                });
+            });
+            
+            // Activate fallback grid as a last resort
+            function activateFallbackGrid() {
+                console.log("ACTIVATING FALLBACK GRID");
+                const fallbackGrid = document.getElementById('fallback-grid');
+                fallbackGrid.style.display = 'grid';
+                fallbackGrid.innerHTML = '';
+                
+                // Use the most basic approach possible to render the items
+                rentalItems.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-800 rounded-lg overflow-hidden';
+                    card.innerHTML = `
+                        <div style="height: 200px; overflow: hidden; position: relative;">
+                            <img src="${item.imageUrl}" alt="${item.title}" 
+                                 style="width: 100%; height: 100%; object-fit: cover;" 
+                                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'200\\' viewBox=\\'0 0 300 200\\'%3E%3Crect width=\\'300\\' height=\\'200\\' fill=\\'%23111111\\'/%3E%3Ctext x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'%23D4AF37\\'%3EAmazon Designs%3C/text%3E%3C/svg%3E'">
+                            <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: #D4AF37; padding: 5px 10px; border-radius: 20px;">
+                                ${item.price}
+                            </div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <span style="display: inline-block; background: rgba(212,175,55,0.2); color: #D4AF37; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 8px;">
+                                ${item.category}
+                            </span>
+                            <h3 style="margin-bottom: 0.5rem; font-weight: 700; font-size: 1.25rem; color: white;">
+                                ${item.title}
+                            </h3>
+                            <p style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.5;">
+                                ${item.description}
+                            </p>
+                            <button style="background: transparent; border: 2px solid #D4AF37; color: white; font-weight: bold; padding: 0.5rem 1rem; border-radius: 9999px; cursor: pointer;">
+                                Reserve
+                            </button>
+                        </div>
+                    `;
+                    fallbackGrid.appendChild(card);
+                });
+            }
+            
+            // Run debug info check after a delay to allow elements to render
+            setTimeout(updateDebugInfo, 1000);
+            
+            // This is a backup to ensure rental items display
+            setTimeout(function() {
+                const rentalGrid = document.getElementById('rental-grid');
+                const existingItems = document.querySelectorAll('.rental-card');
+                console.log("Backup check - Existing items:", existingItems.length);
+                
+                // Force display regardless of current state to ensure all items show
+                if (existingItems.length < 20) {
+                    console.log("Forcing display of all rental items");
+                    
+                    // Clear grid first to avoid duplicates
+                    rentalGrid.innerHTML = '';
+                    
+                    // Add items directly with inline styles to force visibility
+                    rentalItems.forEach((item, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'rental-card';
+                        card.style.display = 'block'; 
+                        card.style.visibility = 'visible';
+                        card.style.opacity = '1';
+                        
+                        card.innerHTML = `
+                            <div class="rental-img-container">
+                                <img src="${item.imageUrl}" alt="${item.title}" 
+                                     style="display: block; width: 100%; height: 100%; object-fit: cover;"
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'200\\' viewBox=\\'0 0 300 200\\'%3E%3Crect width=\\'300\\' height=\\'200\\' fill=\\'%23111111\\'/%3E%3Ctext x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'%23D4AF37\\'%3EAmazon Designs%3C/text%3E%3C/svg%3E'">
+                                <div class="rental-price">${item.price}</div>
+                            </div>
+                            <div class="rental-content">
+                                <span class="rental-category">${item.category}</span>
+                                <h3 class="rental-title">${item.title}</h3>
+                                <p class="rental-description">${item.description}</p>
+                                <div class="rental-actions">
+                                    <button class="pill-button py-2 px-4" data-item-id="${item.id}">Reserve</button>
+                                </div>
+                            </div>
+                        `;
+                        
+                        rentalGrid.appendChild(card);
+                    });
+                    
+                    // Add event listeners to the newly created reserve buttons
+                    document.querySelectorAll('.rental-actions button').forEach(button => {
+                        if (button.dataset.itemId) {
+                            button.addEventListener('click', function() {
+                                const itemId = parseInt(this.dataset.itemId);
+                                const i = reservedItems.indexOf(itemId);
+                                
+                                if (i === -1) {
+                                    reservedItems.push(itemId);
+                                    this.textContent = 'Reserved';
+                                    this.style.backgroundColor = 'var(--gold)';
+                                    this.style.color = '#000';
+                                } else {
+                                    reservedItems.splice(i, 1);
+                                    this.textContent = 'Reserve';
+                                    this.style.backgroundColor = '';
+                                    this.style.color = '';
+                                }
+                                
+                                document.getElementById('reserved-items-input').value = JSON.stringify(reservedItems);
+                                document.getElementById('reserved-items-display').textContent = 
+                                    reservedItems.length > 0 ? reservedItems.length + ' items' : 'None';
+                            });
+                        }
+                    });
+                    
+                    // Final check and ultimate fallback
+                    setTimeout(function() {
+                        const finalCount = document.querySelectorAll('.rental-card').length;
+                        console.log("Final check - Items:", finalCount);
+                        
+                        if (finalCount < 5) {
+                            // Ultimate fallback - static HTML
+                            console.log("ACTIVATING ULTIMATE FALLBACK");
+                            activateFallbackGrid();
+                        }
+                        
+                        // Update debug info one more time
+                        updateDebugInfo();
+                    }, 1000);
+                }
+            }, 1000);
+        });
+
+        // Enhance the filter functionality to work with our grid layout
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up search functionality
+            const searchInput = document.getElementById('rental-search-input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                filterRentalItems(searchTerm);
+            });
+            
+            // Set up filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active state
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-pressed', 'true');
+                    
+                    // Filter items
+                    const category = this.dataset.category;
+                    const searchTerm = document.getElementById('rental-search-input').value.toLowerCase().trim();
+                    filterRentalItems(searchTerm, category);
+                });
+            });
+            
+            // Filter rental items function
+            function filterRentalItems(searchTerm = '', category = 'All') {
+                const items = document.querySelectorAll('.rental-card');
+                let visibleCount = 0;
+                
+                items.forEach(item => {
+                    const title = item.querySelector('.rental-title').textContent.toLowerCase();
+                    const description = item.querySelector('.rental-description').textContent.toLowerCase();
+                    const itemCategory = item.querySelector('.rental-category').textContent;
+                    
+                    const matchesSearch = searchTerm === '' || 
+                        title.includes(searchTerm) || 
+                        description.includes(searchTerm);
+                    
+                    const matchesCategory = category === 'All' || itemCategory === category;
+                    
+                    if (matchesSearch && matchesCategory) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                console.log(`Filtered items: ${visibleCount} visible out of ${items.length} total`);
+                
+                // Show "no results" message if needed
+                let noResultsMsg = document.getElementById('no-results-message');
+                if (visibleCount === 0) {
+                    if (!noResultsMsg) {
+                        noResultsMsg = document.createElement('div');
+                        noResultsMsg.id = 'no-results-message';
+                        noResultsMsg.className = 'text-center py-10 text-gray-400 col-span-full';
+                        noResultsMsg.textContent = 'No rental items found. Try a different search or filter.';
+                        document.getElementById('rental-grid').appendChild(noResultsMsg);
+                    }
+                } else if (noResultsMsg) {
+                    noResultsMsg.remove();
+                }
+            }
+        });
+
+        // Track reserved items
+
+        // Initialize portfolio filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            // Portfolio filtering functionality
+            const portfolioFilterBtns = document.querySelectorAll('.portfolio-categories .filter-btn');
+            const portfolioItems = document.querySelectorAll('#portfolio-grid .portfolio-item');
+            
+            // Handle filter button clicks
+            portfolioFilterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active button
+                    portfolioFilterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filterCategory = this.dataset.category;
+                    
+                    // Filter items
+                    portfolioItems.forEach(item => {
+                        const itemCategory = item.dataset.category;
+                        
+                        if (filterCategory === 'all' || filterCategory === itemCategory) {
+                            item.style.display = 'block';
+                            // Add animation
+                            item.classList.remove('fade-out');
+                            item.classList.add('fade-in');
+                        } else {
+                            // Smooth transition out
+                            item.classList.remove('fade-in');
+                            item.classList.add('fade-out');
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Add hover animations for portfolio items
+            portfolioItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.querySelector('.absolute').style.opacity = '1';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.querySelector('.absolute').style.opacity = '0';
+                });
+            });
+        });
+    </script>
+    
+    <!-- Chatbot Trigger -->
+    <div id="chatbot-btn" style="position:fixed;bottom:120px;right:20px;cursor:pointer;z-index:1010;">
+      <div style="position:relative;">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="Chat" width="60">
+        <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);background-color:var(--gold);color:#000;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:bold;box-shadow:0 2px 5px rgba(0,0,0,0.2);animation:pulse 1.5s infinite;">Chat</div>
+      </div>
+    </div>
+    
+    <!-- Enhanced Chatbot Modal -->
+    <div id="chatbot-modal" style="display:none;position:fixed;bottom:90px;right:20px;width:320px;background:#222;padding:0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.5);z-index:1000;color:#fff;overflow:hidden;">
+      <div style="padding:10px;background:var(--gold);color:#000;display:flex;justify-content:space-between;align-items:center;">
+        <h4 style="margin:0;font-weight:bold;">Amazon Designs Chat</h4>
+        <button id="chatbot-close" style="background:none;border:none;cursor:pointer;font-size:18px;color:#000;" aria-label="Close chat">×</button>
+      </div>
+      
+      <div id="chat-messages" style="height:250px;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:10px;"></div>
+      
+      <div style="padding:10px;border-top:1px solid rgba(255,255,255,0.1);display:flex;">
+        <input id="chat-input" type="text" placeholder="Ask a question..." style="flex:1;padding:8px;border-radius:4px;border:1px solid #444;background:#333;color:white;" />
+        <button id="chat-send" style="background:var(--gold);color:#000;border:none;padding:0 12px;margin-left:8px;border-radius:4px;cursor:pointer;">Send</button>
+      </div>
+    </div>
+    
+    <script>
+      // Simulate chatbot API endpoint
+      const chatbotResponses = {
+        "default": "Thanks for your message! You can call us at (512) 799-0170 for immediate assistance.",
+        "hello": "Hello! How can we help with your event planning today?",
+        "price": "Our pricing varies by item and event size. Check our rental catalog for individual pricing or contact us for a custom quote.",
+        "book": "To book our services, please fill out the contact form or call us directly at (512) 799-0170.",
+        "location": "We serve Central, South & North Texas including Austin, San Antonio, Houston, and Dallas.",
+        "setup": "Yes, we provide complete setup and teardown services for all our rentals.",
+        "delivery": "Delivery is available throughout our service area. Fees vary based on location and volume.",
+        "discount": "We offer package discounts when you book multiple services or rent multiple items.",
+        "wedding": "We specialize in wedding decor! Our team can create the perfect ambiance for your special day.",
+        "corporate": "Our corporate event services include custom branding, professional setups, and flexible scheduling."
+      };
+      
+      function getChatbotResponse(message) {
+        message = message.toLowerCase();
+        
+        // Check for keywords in message
+        for (const [key, response] of Object.entries(chatbotResponses)) {
+          if (message.includes(key)) {
+            return response;
+          }
+        }
+        
+        // Default response
+        return chatbotResponses.default;
+      }
+      
+      // Enhanced chatbot functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const chatBtn = document.getElementById('chatbot-btn');
+        const chatModal = document.getElementById('chatbot-modal');
+        const chatClose = document.getElementById('chatbot-close');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+        
+        // Add welcome message
+        function addSystemMessage(text) {
+          const msgDiv = document.createElement('div');
+          msgDiv.className = 'chat-msg system';
+          msgDiv.style.background = 'rgba(212, 175, 55, 0.1)';
+          msgDiv.style.borderRadius = '8px';
+          msgDiv.style.padding = '10px';
+          msgDiv.style.maxWidth = '80%';
+          msgDiv.style.alignSelf = 'flex-start';
+          msgDiv.textContent = text;
+          chatMessages.appendChild(msgDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addUserMessage(text) {
+          const msgDiv = document.createElement('div');
+          msgDiv.className = 'chat-msg user';
+          msgDiv.style.background = 'rgba(255, 255, 255, 0.1)';
+          msgDiv.style.borderRadius = '8px';
+          msgDiv.style.padding = '10px';
+          msgDiv.style.maxWidth = '80%';
+          msgDiv.style.alignSelf = 'flex-end';
+          msgDiv.textContent = text;
+          chatMessages.appendChild(msgDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Send and receive messages
+        function sendMessage() {
+          const message = chatInput.value.trim();
+          if (message === '') return;
+          
+          addUserMessage(message);
+          chatInput.value = '';
+          
+          // Simulate API call to get response
+          setTimeout(() => {
+            const response = getChatbotResponse(message);
+            addSystemMessage(response);
+          }, 500);
+        }
+        
+        // Open chat with welcome message
+        chatBtn.addEventListener('click', () => {
+          chatModal.style.display = 'block';
+          if (chatMessages.children.length === 0) {
+            addSystemMessage("👋 Hello! How can we help you plan your perfect event?");
+          }
+          chatInput.focus();
+        });
+        
+        // Close chat
+        chatClose.addEventListener('click', () => {
+          chatModal.style.display = 'none';
+        });
+        
+        // Send message on click
+        chatSend.addEventListener('click', sendMessage);
+        
+        // Send message on Enter key press
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            sendMessage();
+          }
+        });
+        
+        // Close on Esc key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && chatModal.style.display === 'block') {
+            chatModal.style.display = 'none';
+          }
+        });
+        });
+    </script>
+</body>
+</html>
