@@ -9,6 +9,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Global reservation tracking
+        window.reservedItems = [];
+        
         // Portfolio images for lightbox
         const portfolioImages = [
             'https://images.unsplash.com/photo-1519671488599-5b6a7a7f583b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
@@ -904,6 +907,124 @@
                 transform: scale(0.95);
             }
         }
+        
+        #simple-rental-grid button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Rental section styles - matching portfolio styles */
+        .rental-filters .filter-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 0.25rem;
+        }
+        
+        .rental-filters .filter-btn:hover {
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+        
+        .rental-filters .filter-btn.active {
+            background-color: var(--gold);
+            color: black;
+            border-color: var(--gold);
+        }
+        
+        #rental-grid .rental-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        #rental-grid .rental-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        #rental-grid .rental-img-container {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+        
+        #rental-grid .rental-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        #rental-grid .rental-item:hover .rental-img-container img {
+            transform: scale(1.1);
+        }
+        
+        #rental-grid .rental-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+        
+        #rental-grid .rental-item:hover .rental-overlay {
+            opacity: 1;
+        }
+        
+        #rental-grid .rental-details {
+            padding: 1.5rem;
+            background: rgba(32, 32, 32, 0.95);
+        }
+        
+        #rental-grid .rental-category {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        #rental-grid .rental-price {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-size: 0.875rem;
+            z-index: 2;
+        }
+        
+        #rental-grid .rental-btn {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: white;
+            font-weight: bold;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        #rental-grid .rental-btn:hover {
+            background: var(--gold);
+            color: black;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -1076,11 +1197,11 @@
                 <button class="filter-btn" data-category="Lighting" tabindex="0" aria-pressed="false">Lighting</button>
                 <button class="filter-btn" data-category="Furniture" tabindex="0" aria-pressed="false">Furniture</button>
                 <button class="filter-btn" data-category="Decorations" tabindex="0" aria-pressed="false">Decorations</button>
-                </div>
+            </div>
                 
-            <!-- Simple grid of rental items -->
-            <div id="simple-rental-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
-                <!-- Rental items will be dynamically inserted here by JavaScript -->
+            <!-- Portfolio-style grid for rental items -->
+            <div id="rental-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+                <!-- Items will be added dynamically via JavaScript -->
             </div>
         </div>
     </section>
@@ -1102,59 +1223,59 @@
                         <!-- Page 1 (Testimonials 1-3) -->
                         <div class="testimonial-page">
                             <div class="testimonial-slide">
-                <!-- Testimonial 1 -->
+                                <!-- Testimonial 1 -->
                                 <div class="testimonial-card" data-index="0">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" 
-                             alt="Sarah Johnson" 
-                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
-                             loading="lazy">
-                        <div class="ml-4">
-                            <h4 class="text-xl font-bold text-white">Sarah Johnson</h4>
-                            <p class="text-yellow-500">Wedding Client</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">
-                        "Amazon Designs & Decor transformed our wedding venue into a fairy tale. Their attention to detail was impeccable, and they handled every aspect so professionally. Our guests are still talking about how beautiful everything was!"
-                    </p>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                                <div class="testimonial-card" data-index="1">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" 
-                             alt="Michael Chen" 
-                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
-                             loading="lazy">
-                        <div class="ml-4">
-                            <h4 class="text-xl font-bold text-white">Michael Chen</h4>
-                            <p class="text-yellow-500">Corporate Client</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">
-                        "We've used Amazon Designs & Decor for three annual conferences now, and they consistently exceed our expectations. Their team is creative, responsive, and delivers flawless execution every time."
-                    </p>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                                <div class="testimonial-card" data-index="2">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" 
-                             alt="Emily Rodriguez" 
-                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
-                             loading="lazy">
-                        <div class="ml-4">
-                            <h4 class="text-xl font-bold text-white">Emily Rodriguez</h4>
-                            <p class="text-yellow-500">Birthday Party Client</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">
-                        "I was overwhelmed planning my daughter's quinceañera, but Amazon Designs made it so easy! They took my vague ideas and created something more beautiful than I could have imagined. Worth every penny!"
-                    </p>
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/women/32.jpg" 
+                                             alt="Sarah Johnson" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Sarah Johnson</h4>
+                                            <p class="text-yellow-500">Wedding Client</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "Amazon Designs & Decor transformed our wedding venue into a fairy tale. Their attention to detail was impeccable, and they handled every aspect so professionally. Our guests are still talking about how beautiful everything was!"
+                                    </p>
                                 </div>
-                </div>
-            </div>
-            
+                                
+                                <!-- Testimonial 2 -->
+                                <div class="testimonial-card" data-index="1">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/men/45.jpg" 
+                                             alt="Michael Chen" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Michael Chen</h4>
+                                            <p class="text-yellow-500">Corporate Client</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "We've used Amazon Designs & Decor for three annual conferences now, and they consistently exceed our expectations. Their team is creative, responsive, and delivers flawless execution every time."
+                                    </p>
+                                </div>
+                                
+                                <!-- Testimonial 3 -->
+                                <div class="testimonial-card" data-index="2">
+                                    <div class="flex items-center mb-6">
+                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" 
+                                             alt="Emily Rodriguez" 
+                                             class="w-16 h-16 rounded-full border-2 border-yellow-500 lazy" 
+                                             loading="lazy">
+                                        <div class="ml-4">
+                                            <h4 class="text-xl font-bold text-white">Emily Rodriguez</h4>
+                                            <p class="text-yellow-500">Birthday Party Client</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 italic">
+                                        "I was overwhelmed planning my daughter's quinceañera, but Amazon Designs made it so easy! They took my vague ideas and created something more beautiful than I could have imagined. Worth every penny!"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- Page 2 (Testimonials 4-6) -->
                         <div class="testimonial-page">
                             <div class="testimonial-slide">
@@ -1952,7 +2073,7 @@
                 if (elementTop < window.innerHeight - elementVisible) {
                     setTimeout(() => {
                         // No longer need to check scroll direction, just activate
-                            el.classList.add('scroll-active');
+                        el.classList.add('scroll-active');
                         el.classList.remove('scroll-up', 'scroll-down');
                         
                         // Track this element as activated
@@ -2549,14 +2670,148 @@
                 });
             });
         });
+
+        // Simple function to display rental items in a grid
+        document.addEventListener('DOMContentLoaded', function() {
+            const rentalGrid = document.getElementById('rental-grid');
+            if (!rentalGrid) return;
+            
+            // Clear any existing items
+            rentalGrid.innerHTML = '';
+            
+            console.log(`Displaying ${rentalItems.length} rental items in portfolio style`);
+            
+            // Loop through all rental items and create portfolio-style cards
+            rentalItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'rental-item';
+                card.dataset.category = item.category;
+                
+                card.innerHTML = `
+                    <div class="rental-img-container">
+                        <img src="${item.imageUrl}" alt="${item.title}" 
+                            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'200\\' viewBox=\\'0 0 300 200\\'%3E%3Crect width=\\'300\\' height=\\'200\\' fill=\\'%23111111\\'/%3E%3Ctext x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'%23D4AF37\\'%3EAmazon Designs%3C/text%3E%3C/svg%3E'">
+                        <div class="rental-price">${item.price}</div>
+                        <div class="rental-overlay">
+                            <div class="text-center p-4">
+                                <h3 class="text-white text-xl font-bold">${item.title}</h3>
+                                <p class="text-gray-200 mt-2">${item.description}</p>
+                                <button class="rental-btn mt-4" data-item-id="${item.id}">Reserve Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rental-details">
+                        <span class="rental-category">${item.category}</span>
+                        <h3 class="text-white text-lg font-bold mb-2">${item.title}</h3>
+                        <p class="text-gray-300 text-sm mb-4 line-clamp-2">${item.description}</p>
+                    </div>
+                `;
+                
+                rentalGrid.appendChild(card);
+            });
+            
+            // Setup filtering for rental items
+            const filterButtons = document.querySelectorAll('.rental-filters .filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active state
+                    filterButtons.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-pressed', 'true');
+                    
+                    // Filter items
+                    const category = this.dataset.category;
+                    const items = document.querySelectorAll('#rental-grid .rental-item');
+                    
+                    items.forEach(item => {
+                        if (category === 'All' || item.dataset.category === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Setup search functionality
+            const searchInput = document.getElementById('rental-search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    
+                    if (searchTerm === '') {
+                        // Reset to current filter if search is cleared
+                        const activeFilter = document.querySelector('.rental-filters .filter-btn.active')?.dataset.category || 'All';
+                        const items = document.querySelectorAll('#rental-grid .rental-item');
+                        
+                        items.forEach(item => {
+                            if (activeFilter === 'All' || item.dataset.category === activeFilter) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                        return;
+                    }
+                    
+                    // Hide/show based on search term
+                    const items = document.querySelectorAll('#rental-grid .rental-item');
+                    items.forEach(item => {
+                        const title = item.querySelector('h3').textContent.toLowerCase();
+                        const description = item.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Add reservation functionality
+            document.querySelectorAll('#rental-grid .rental-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = parseInt(this.dataset.itemId);
+                    const reservedItems = window.reservedItems || [];
+                    const i = reservedItems.indexOf(itemId);
+                    
+                    if (i === -1) {
+                        reservedItems.push(itemId);
+                        this.textContent = 'Reserved';
+                        this.style.backgroundColor = 'var(--gold)';
+                        this.style.color = 'black';
+                    } else {
+                        reservedItems.splice(i, 1);
+                        this.textContent = 'Reserve Now';
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                    }
+                    
+                    window.reservedItems = reservedItems;
+                    
+                    const reservedInputEl = document.getElementById('reserved-items-input');
+                    const reservedDisplayEl = document.getElementById('reserved-items-display');
+                    
+                    if (reservedInputEl) {
+                        reservedInputEl.value = JSON.stringify(reservedItems);
+                    }
+                    
+                    if (reservedDisplayEl) {
+                        reservedDisplayEl.textContent = reservedItems.length > 0 ? 
+                            `${reservedItems.length} items selected` : 'None';
+                    }
+                });
+            });
+        });
     </script>
     
     <!-- Chatbot Trigger -->
     <div id="chatbot-btn" style="position:fixed;bottom:120px;right:20px;cursor:pointer;z-index:1010;">
-      <div style="position:relative;">
-        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="Chat" width="60">
-        <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);background-color:var(--gold);color:#000;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:bold;box-shadow:0 2px 5px rgba(0,0,0,0.2);animation:pulse 1.5s infinite;">Chat</div>
-      </div>
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="Chat" width="60">
     </div>
     
     <!-- Enhanced Chatbot Modal -->
